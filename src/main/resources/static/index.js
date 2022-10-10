@@ -1,26 +1,26 @@
 angular.module('app', []).controller('indexController', function ($scope, $http) {
     const contextPath = 'http://localhost:8189/app';
 
-    $scope.loadClients = function () {
-        $http.get(contextPath + '/client/all')
+    $scope.loadProducts = function () {
+        $http.get(contextPath + '/product/findAll')
             .then(function (response) {
-                $scope.clientList = response.data;
+                $scope.productList = response.data;
             });
     };
 
-    $scope.changeScore = function (clientId, delta){
+    $scope.changeCost = function (clientId, delta){
         $http({
-            url: contextPath + '/client/change_score',
+            url: contextPath + '/product/change_cost',
             method: 'GET',
             params: {
-                clientId: clientId,
+                productId: clientId,
                 delta: delta
             }
         }).then(function (response){
-            $scope.loadClients();
+            $scope.loadProducts();
         });
     };
 
-    $scope.loadClients();
+    $scope.loadProducts();
 
 });

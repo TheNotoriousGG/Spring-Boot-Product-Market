@@ -2,34 +2,35 @@ package ru.geekbrains.spring_less_web.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.spring_less_web.Model.Client;
-import ru.geekbrains.spring_less_web.Repository.ClientRepository;
-import ru.geekbrains.spring_less_web.Service.ClientService;
+import ru.geekbrains.spring_less_web.Model.Product;
+import ru.geekbrains.spring_less_web.Repository.ProductRepository;
+import ru.geekbrains.spring_less_web.Service.ProductService;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/product")
 public class MainController {
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ProductRepository productRepository;
 
     @Autowired
-    private ClientService service;
+    private ProductService service;
 
-    @GetMapping("/client/all")
-    public List<Client> getTest(){
-        return clientRepository.getAllClients();
+    @GetMapping("/findAll")
+    public List<Product> findAll(){
+        return productRepository.getAllProducts();
     }
 
-    @GetMapping("/client/change_score")
-    public void changeScore(@RequestParam Long clientId, @RequestParam Integer delta){
-        service.changeScore(clientId, delta);
+    @GetMapping("/change_cost")
+    public void changeScore(@RequestParam Long productId, @RequestParam Double delta){
+        service.changeScore(productId, delta);
     }
 
-    @PostMapping("/client/add")
-    public void addClientPost(@RequestBody Client client){
-        clientRepository.addClient(client);
+    @PostMapping("/add")
+    public void addProductPost(@RequestBody Product product){
+        productRepository.addProduct(product);
     }
 
 

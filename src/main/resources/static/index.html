@@ -18,17 +18,17 @@
         <table class="table table-hover" cellpadding="0" cellspacing="0">
             <tr>
                 <td>ID</td>
-                <td>Имя клиента</td>
-                <td>Баллы</td>
+                <td>Наименование</td>
+                <td>Цена</td>
             </tr>
             <tbody>
-            <tr ng-repeat="s in clientList">
-                <td>{{s.id}}</td>
-                <td>{{s.name}}</td>
+            <tr ng-repeat="p in productList">
+                <td>{{p.id}}</td>
+                <td>{{p.title}}</td>
                 <td>
-                <button class="btn btn-danger" ng-click="changeScore(s.id, -5)">-</button>
-                {{s.score}}
-                <button class="btn btn-primary" ng-click="changeScore(s.id, 5)">+</button>
+                <button class="btn btn-danger" ng-click="changeCost(p.id, -5)">-</button>
+                {{p.cost}}
+                <button class="btn btn-primary" ng-click="changeCost(p.id, 5)">+</button>
                 </td>
             </tbody>
         </table>
