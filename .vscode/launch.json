@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SpringLessWebApplication<spring_less_web>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "ru.geekbrains.spring_less_web.SpringLessWebApplication",
+            "projectName": "spring_less_web",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
