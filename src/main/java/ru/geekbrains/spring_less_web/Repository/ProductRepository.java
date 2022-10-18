@@ -1,49 +1,76 @@
 package ru.geekbrains.spring_less_web.Repository;
 
+import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.geekbrains.spring_less_web.Model.Product;
+import ru.geekbrains.spring_less_web.Utils.SessionFactoryUtils;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Component
-public class ProductRepository {
+public class ProductRepository implements ProductDAO{
 
-    private List<Product> productList;
+    SessionFactoryUtils sessionFactoryUtils;
+
+    @Autowired
+    public void setSessionFactoryUtils(SessionFactoryUtils sessionFactoryUtils) {
+        this.sessionFactoryUtils = sessionFactoryUtils;
+    }
 
     @PostConstruct
-    public void init(){
-        productList = new ArrayList<>(Arrays.asList(
-                new Product(1l, "IPhone", 80.5),
-                new Product(2l, "IMac", 80.5),
-                new Product(3l,"IPad", 80.5)
-
-        ));
+    void init(){
+        try (Session session = sessionFactoryUtils.getSession()){
+            session.beginTransaction();
+            session.saveOrUpdate(new Product("IPhone",1000.0));
+            session.saveOrUpdate(new Product("IPad",1500.0));
+            session.getTransaction().commit();
+        }
     }
 
-    public List<Product> getAllProducts(){
-        return Collections.unmodifiableList(productList);
+    @Override
+    public Product findById(Long id) {
+        try (Session session = sessionFactoryUtils.getSession()) {
+            session.beginTransaction();
+            Product product = session.get(Product.class,id);
+            session.getTransaction().commit();
+            return product;
+        }
     }
 
-    public Product findById(Long id){
-        return productList.stream().filter(c -> c.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+    @Override
+    public List<Product> findAll() {
+        try (Session session = sessionFactoryUtils.getSession()){
+            session.beginTransaction();
+            List<Product> products = session.createQuery("select p from Product p").getResultList();
+            session.getTransaction().commit();
+            return products;
+        }
     }
 
-    public void add(Long id, String name, Double cost){
-     productList.add(new Product(id, name, cost));
+    @Override
+    public Product findByTitle(String title) {
+        return null;
     }
 
-    public void addProduct(Product product) {
-        productList.add(product);
+    @Override
+    public void save(Product product) {
+        try (Session session = sessionFactoryUtils.getSession()){
+            session.beginTransaction();
+            session.saveOrUpdate(product);
+            session.getTransaction().commit();
+        }
     }
 
-    public void deleteProduct(Product product) {
-        if (product != null)
-        productList.remove(product);
+    @Override
+    public void delete(Product product) {
+        try (Session session = sessionFactoryUtils.getSession()){
+            session.beginTransaction();
+            session.delete(product);
+            session.getTransaction().commit();
+        }
     }
+
+
 }

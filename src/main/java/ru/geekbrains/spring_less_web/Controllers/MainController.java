@@ -20,7 +20,7 @@ public class MainController {
 
     @GetMapping("/findAll")
     public List<Product> findAll(){
-        return productRepository.getAllProducts();
+        return productRepository.findAll();
     }
 
     @GetMapping("/change_cost")
@@ -30,12 +30,12 @@ public class MainController {
 
     @PostMapping("/add")
     public void addProduct(@RequestBody Product product){
-        productRepository.addProduct(product);
+        productRepository.save(product);
     }
 
     @DeleteMapping("/delete")
     public void deleteProduct(@RequestParam Long productId){
-        productRepository.deleteProduct(
+        productRepository.delete(
                 productRepository.findById(productId)
         );
     }

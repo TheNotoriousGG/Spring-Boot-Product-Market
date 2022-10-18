@@ -1,7 +1,19 @@
 package ru.geekbrains.spring_less_web.Model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Pruducts")
 public class Product {
 
+
+    public Product(String title, Double cost) {
+        this.title = title;
+        this.cost = cost;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String title;
