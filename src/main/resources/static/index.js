@@ -8,14 +8,25 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             });
     };
 
-    $scope.changeCost = function (clientId, delta){
+    $scope.changeCost = function (productId, delta){
         $http({
             url: contextPath + '/product/change_cost',
             method: 'GET',
             params: {
-                productId: clientId,
+                productId: productId,
                 delta: delta
             }
+        }).then(function (response){
+            $scope.loadProducts();
+        });
+    };
+
+    $scope.deleteProduct = function (productId){
+        $http({
+            url: contextPath + '/product/delete',
+            method: 'DELETE',
+            params: {productId: productId},
+
         }).then(function (response){
             $scope.loadProducts();
         });

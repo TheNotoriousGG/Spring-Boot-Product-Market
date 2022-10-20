@@ -20,17 +20,24 @@ public class MainController {
 
     @GetMapping("/findAll")
     public List<Product> findAll(){
-        return productRepository.getAllProducts();
+        return productRepository.findAll();
     }
 
     @GetMapping("/change_cost")
-    public void changeScore(@RequestParam Long productId, @RequestParam Double delta){
+    public void changeCost(@RequestParam Long productId, @RequestParam Double delta){
         service.changeScore(productId, delta);
     }
 
     @PostMapping("/add")
-    public void addProductPost(@RequestBody Product product){
-        productRepository.addProduct(product);
+    public void addProduct(@RequestBody Product product){
+        productRepository.save(product);
+    }
+
+    @DeleteMapping("/delete")
+    public void deleteProduct(@RequestParam Long productId){
+        productRepository.delete(
+                productRepository.findById(productId)
+        );
     }
 
 
