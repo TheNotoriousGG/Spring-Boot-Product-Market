@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import ru.geekbrains.spring_less_web.Model.Product;
 import ru.geekbrains.spring_less_web.Utils.SessionFactoryUtils;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Component
@@ -17,16 +16,6 @@ public class ProductRepository implements ProductDAO{
     @Autowired
     public void setSessionFactoryUtils(SessionFactoryUtils sessionFactoryUtils) {
         this.sessionFactoryUtils = sessionFactoryUtils;
-    }
-
-    @PostConstruct
-    void init(){
-        try (Session session = sessionFactoryUtils.getSession()){
-            session.beginTransaction();
-            session.saveOrUpdate(new Product("IPhone",1000.0));
-            session.saveOrUpdate(new Product("IPad",1500.0));
-            session.getTransaction().commit();
-        }
     }
 
     @Override
