@@ -1,16 +1,18 @@
 package ru.geekbrains.spring_less_web.Model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Products")
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Product {
 
-
-    public Product(String title, Double cost) {
-        this.title = title;
-        this.cost = cost;
-    }
 
     @Id
     @GeneratedValue
@@ -25,47 +27,6 @@ public class Product {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Product(Long id, String name, Double cost,Customer customer) {
-        this.id = id;
-        this.title = name;
-        this.cost = cost;
-        this.customer = customer;
-    }
-
-    public Product() {
-    }
-
-    public Double getCost() {
-        return cost;
-    }
-
-    public void setCost(Double cost) {
-        this.cost = cost;
-    }
 
     @Override
     public String toString() {
