@@ -1,55 +1,39 @@
 package ru.geekbrains.spring_less_web.Model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Pruducts")
+@Table(name = "Products")
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Product {
 
 
-    public Product(String title, Double cost) {
-        this.title = title;
-        this.cost = cost;
-    }
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
+    @Column(name = "id")
     private Long id;
 
     private String title;
 
     private Double cost;
 
-    public Long getId() {
-        return id;
-    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Product(Long id, String name, Double cost) {
-        this.id = id;
-        this.title = name;
-        this.cost = cost;
-    }
-
-    public Product() {
-    }
-
-    public Double getCost() {
-        return cost;
-    }
-
-    public void setCost(Double cost) {
-        this.cost = cost;
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", cost=" + cost +
+                '}';
     }
 }
